@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Cleaning</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #09500f;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .container {
+            background-color: rgb(255, 255, 255);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 1700px;
+            max-width: 90%;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        
+        form {
+            margin-top: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        
+        select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            font-size: 16px;
+            color: #333;
+            box-sizing: border-box;
+        }
+        
+        button {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Data Cleaning</h1>
+        <form action="{{ url_for('save_cleaned_data') }}" method="post">
+            <input type="hidden" name="file_name" value="{{ file_name }}">
+            
+            <h2>Handling Missing Values</h2>
+            <label for="missing_values_strategy">Select strategy for handling missing values:</label>
+            <select id="missing_values_strategy" name="missing_values_strategy">
+                <option value="imputation">Imputation</option>
+                <option value="delete_rows">Delete Rows with Missing Values</option>
+                <option value="delete_columns">Delete Columns with Missing Values</option>
+                <!-- Add more options as needed -->
+            </select>
+            
+            <h2>Removing Duplicates</h2>
+            <label for="duplicate_columns">Select columns to identify duplicates:</label>
+            <select id="duplicate_columns" name="duplicate_columns" multiple>
+                {% for column in overview.column_names %}
+                <option value="{{ column }}">{{ column }}</option>
+                {% endfor %}
+            </select>
+            
+            <h2>Dealing with Outliers</h2>
+            <label for="outlier_strategy">Select strategy for dealing with outliers:</label>
+            <select id="outlier_strategy" name="outlier_strategy">
+                <option value="remove_outliers">Remove Outliers</option>
+                <option value="transform_outliers">Transform Outliers</option>
+                <option value="treat_separately">Treat Outliers Separately</option>
+                <!-- Add more options as needed -->
+            </select>
+            
+            <button type="submit">Save Cleaned Data</button>
+        </form>
+    </div>
+</body>
+</html>

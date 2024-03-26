@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataRefinery - Your Data Analysis Companion</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #496e04;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 1750px;
+            max-width: 90%;
+        }
+        
+        h1, p {
+            text-align: center;
+            color: rgb(51, 51, 51);
+        }
+
+        p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+        
+        form {
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        
+        select, button {
+            width: 200px;
+            padding: 10px;
+            margin-top: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            font-size: 16px;
+            color: #333;
+            box-sizing: border-box;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        button {
+            background-color: #007bff;
+            color: #fff;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>DataRefinery</h1>
+        <p>Welcome to DataRefinery, your dynamic data analysis companion. Empowering you to transform raw data into actionable insights!</p>
+        
+        <h2>Effortless Data Management</h2>
+        <p>Seamlessly upload your datasets with our intuitive interface. From JSON to CSV, we support various formats for hassle-free importation.</p>
+
+        <h2>Streamlined Data Cleaning</h2>
+        <p>Wave goodbye to messy datasets! Our advanced tools handle missing values, remove duplicates, and address outliers, ensuring your data is pristine and analysis-ready.</p>
+
+        <h2>Insightful Data Overview</h2>
+        <p>Gain valuable insights into your datasets with our comprehensive overview feature. Identify missing values, detect duplicates, and explore data types effortlessly.</p>
+
+        <h2>Tailored Data Analysis</h2>
+        <p>Unlock the full potential of your data with our robust analysis capabilities. From statistical insights to predictive modeling, we equip you with tools for informed decision-making.</p>
+
+        <h2>Start Your Data Journey Today</h2>
+        <p>Whether you're a seasoned data scientist or a novice explorer, DataRefinery is your ultimate companion. Join us today and embark on a journey of discovery and empowerment!</p>
+
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="checkbox" id="show_cleaned" name="show_cleaned">
+            <label for="show_cleaned">Show Cleaned Files</label>
+            <select id="file_dropdown" name="existing_file">
+                <option value="">-- Select file --</option>
+                {% for file in files %}
+                    <option value="{{ file }}">{{ file }}</option>
+                {% endfor %}
+            </select>
+            <input type="file" name="file" accept=".json, .csv, .xlsx">
+            <button type="submit">Upload</button>
+            
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("show_cleaned").addEventListener("change", function() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/get_files?show_cleaned=" + this.checked, true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var files = JSON.parse(xhr.responseText);
+                    var dropdown = document.getElementById("file_dropdown");
+                    dropdown.innerHTML = '<option value="">-- Select file --</option>';
+                    files.forEach(function(file) {
+                        var option = document.createElement("option");
+                        option.value = file;
+                        option.textContent = file;
+                        dropdown.appendChild(option);
+                    });
+                }
+            };
+            xhr.send();
+        });
+    </script>
+</body>
+</html>
