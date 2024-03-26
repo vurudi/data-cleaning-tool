@@ -1,0 +1,404 @@
+{
+    "business_records": [
+        {
+            "Company_ID": 1,
+            "Company_Name": "Company 1",
+            "Industry": "Retail",
+            "Revenue": 2387614,
+            "Employees": 25,
+            "Location": "New York"
+        },
+        {
+            "Company_ID": 2,
+            "Company_Name": "Company 2",
+            "Industry": "Manufacturing",
+            "Revenue": 6133692,
+            "Employees": 318,
+            "Location": "Phoenix"
+        },
+        {
+            "Company_ID": 3,
+            "Company_Name": "Company 3",
+            "Industry": "Manufacturing",
+            "Revenue": 7355070,
+            "Employees": 153,
+            "Location": "Los Angeles"
+        },
+        {
+            "Company_ID": 4,
+            "Company_Name": "Company 4",
+            "Industry": "Manufacturing",
+            "Revenue": 3788209,
+            "Employees": 324,
+            "Location": "Los Angeles"
+        },
+        {
+            "Company_ID": 5,
+            "Company_Name": "Company 5",
+            "Industry": "Manufacturing",
+            "Revenue": 3527804,
+            "Employees": 59,
+            "Location": "Los Angeles"
+        },
+        {
+            "Company_ID": 6,
+            "Company_Name": "Company 6",
+            "Industry": "Retail",
+            "Revenue": 9915579,
+            "Employees": 105,
+            "Location": "Chicago"
+        },
+        {
+            "Company_ID": 7,
+            "Company_Name": "Company 7",
+            "Industry": "Retail",
+            "Revenue": 8343502,
+            "Employees": 390,
+            "Location": "Phoenix"
+        },
+        {
+            "Company_ID": 8,
+            "Company_Name": "Company 8",
+            "Industry": "Retail",
+            "Revenue": 3341688,
+            "Employees": 236,
+            "Location": "New York"
+        },
+        {
+            "Company_ID": 9,
+            "Company_Name": "Company 9",
+            "Industry": "Manufacturing",
+            "Revenue": 1683557,
+            "Employees": 50,
+            "Location": "Phoenix"
+        },
+        {
+            "Company_ID": 10,
+            "Company_Name": "Company 10",
+            "Industry": "Technology",
+            "Revenue": 3691462,
+            "Employees": 435,
+            "Location": "Phoenix"
+        },
+        {
+            "Company_ID": 11,
+            "Company_Name": "Company 11",
+            "Industry": "Manufacturing",
+            "Revenue": 4401666,
+            "Employees": 318,
+            "Location": "Houston"
+        },
+        {
+            "Company_ID": 12,
+            "Company_Name": "Company 12",
+            "Industry": "Finance",
+            "Revenue": 8501847,
+            "Employees": 379,
+            "Location": "New York"
+        },
+        {
+            "Company_ID": 13,
+            "Company_Name": "Company 13",
+            "Industry": "Healthcare",
+            "Revenue": 6189806,
+            "Employees": 450,
+            "Location": "Houston"
+        },
+        {
+            "Company_ID": 14,
+            "Company_Name": "Company 14",
+            "Industry": "Retail",
+            "Revenue": 8244047,
+            "Employees": 128,
+            "Location": "New York"
+        },
+        {
+            "Company_ID": 15,
+            "Company_Name": "Company 15",
+            "Industry": "Retail",
+            "Revenue": 6272943,
+            "Employees": 181,
+            "Location": "Phoenix"
+        },
+        {
+            "Company_ID": 16,
+            "Company_Name": "Company 16",
+            "Industry": "Finance",
+            "Revenue": 2769999,
+            "Employees": 241,
+            "Location": "Chicago"
+        },
+        {
+            "Company_ID": 17,
+            "Company_Name": "Company 17",
+            "Industry": "Finance",
+            "Revenue": 3519625,
+            "Employees": 211,
+            "Location": "Chicago"
+        },
+        {
+            "Company_ID": 18,
+            "Company_Name": "Company 18",
+            "Industry": "Healthcare",
+            "Revenue": 417298,
+            "Employees": 100,
+            "Location": "Los Angeles"
+        },
+        {
+            "Company_ID": 19,
+            "Company_Name": "Company 19",
+            "Industry": "Retail",
+            "Revenue": 1584638,
+            "Employees": 75,
+            "Location": "Chicago"
+        },
+        {
+            "Company_ID": 20,
+            "Company_Name": "Company 20",
+            "Industry": "Healthcare",
+            "Revenue": 2911830,
+            "Employees": 406,
+            "Location": "Los Angeles"
+        },
+        {
+            "Company_ID": 21,
+            "Company_Name": "Company 21",
+            "Industry": "Retail",
+            "Revenue": 4803323,
+            "Employees": 36,
+            "Location": "Houston"
+        },
+        {
+            "Company_ID": 22,
+            "Company_Name": "Company 22",
+            "Industry": "Healthcare",
+            "Revenue": 6540178,
+            "Employees": 409,
+            "Location": "Chicago"
+        },
+        {
+            "Company_ID": 23,
+            "Company_Name": "Company 23",
+            "Industry": "Retail",
+            "Revenue": 4052295,
+            "Employees": 224,
+            "Location": "New York"
+        },
+        {
+            "Company_ID": 24,
+            "Company_Name": "Company 24",
+            "Industry": "Finance",
+            "Revenue": 6449062,
+            "Employees": 319,
+            "Location": "Phoenix"
+        },
+        {
+            "Company_ID": 25,
+            "Company_Name": "Company 25",
+            "Industry": "Finance",
+            "Revenue": 7525805,
+            "Employees": 45,
+            "Location": "Los Angeles"
+        },
+        {
+            "Company_ID": 26,
+            "Company_Name": "Company 26",
+            "Industry": "Retail",
+            "Revenue": 2023475,
+            "Employees": 380,
+            "Location": "Houston"
+        },
+        {
+            "Company_ID": 27,
+            "Company_Name": "Company 27",
+            "Industry": "Finance",
+            "Revenue": 1059908,
+            "Employees": 187,
+            "Location": "Houston"
+        },
+        {
+            "Company_ID": 28,
+            "Company_Name": "Company 28",
+            "Industry": "Technology",
+            "Revenue": 3353040,
+            "Employees": 277,
+            "Location": "Houston"
+        },
+        {
+            "Company_ID": 29,
+            "Company_Name": "Company 29",
+            "Industry": "Finance",
+            "Revenue": 9875369,
+            "Employees": 264,
+            "Location": "Phoenix"
+        },
+        {
+            "Company_ID": 30,
+            "Company_Name": "Company 30",
+            "Industry": "Finance",
+            "Revenue": 355459,
+            "Employees": 315,
+            "Location": "Los Angeles"
+        },
+        {
+            "Company_ID": 31,
+            "Company_Name": "Company 31",
+            "Industry": "Manufacturing",
+            "Revenue": 3906800,
+            "Employees": 10,
+            "Location": "Chicago"
+        },
+        {
+            "Company_ID": 32,
+            "Company_Name": "Company 32",
+            "Industry": "Finance",
+            "Revenue": 3664523,
+            "Employees": 235,
+            "Location": "Chicago"
+        },
+        {
+            "Company_ID": 33,
+            "Company_Name": "Company 33",
+            "Industry": "Manufacturing",
+            "Revenue": 9121904,
+            "Employees": 394,
+            "Location": "Chicago"
+        },
+        {
+            "Company_ID": 34,
+            "Company_Name": "Company 34",
+            "Industry": "Technology",
+            "Revenue": 5518760,
+            "Employees": 218,
+            "Location": "New York"
+        },
+        {
+            "Company_ID": 35,
+            "Company_Name": "Company 35",
+            "Industry": "Healthcare",
+            "Revenue": 2823819,
+            "Employees": 412,
+            "Location": "Phoenix"
+        },
+        {
+            "Company_ID": 36,
+            "Company_Name": "Company 36",
+            "Industry": "Manufacturing",
+            "Revenue": 9524461,
+            "Employees": 437,
+            "Location": "Chicago"
+        },
+        {
+            "Company_ID": 37,
+            "Company_Name": "Company 37",
+            "Industry": "Manufacturing",
+            "Revenue": 6771845,
+            "Employees": 116,
+            "Location": "Los Angeles"
+        },
+        {
+            "Company_ID": 38,
+            "Company_Name": "Company 38",
+            "Industry": "Manufacturing",
+            "Revenue": 7306187,
+            "Employees": 288,
+            "Location": "Houston"
+        },
+        {
+            "Company_ID": 39,
+            "Company_Name": "Company 39",
+            "Industry": "Retail",
+            "Revenue": 7641106,
+            "Employees": 475,
+            "Location": "Houston"
+        },
+        {
+            "Company_ID": 40,
+            "Company_Name": "Company 40",
+            "Industry": "Manufacturing",
+            "Revenue": 2239162,
+            "Employees": 166,
+            "Location": "Chicago"
+        },
+        {
+            "Company_ID": 41,
+            "Company_Name": "Company 41",
+            "Industry": "Healthcare",
+            "Revenue": 9065000,
+            "Employees": 251,
+            "Location": "Houston"
+        },
+        {
+            "Company_ID": 42,
+            "Company_Name": "Company 42",
+            "Industry": "Manufacturing",
+            "Revenue": 6193636,
+            "Employees": 205,
+            "Location": "Phoenix"
+        },
+        {
+            "Company_ID": 43,
+            "Company_Name": "Company 43",
+            "Industry": "Healthcare",
+            "Revenue": 5590397,
+            "Employees": 46,
+            "Location": "New York"
+        },
+        {
+            "Company_ID": 44,
+            "Company_Name": "Company 44",
+            "Industry": "Finance",
+            "Revenue": 2502936,
+            "Employees": 295,
+            "Location": "Chicago"
+        },
+        {
+            "Company_ID": 45,
+            "Company_Name": "Company 45",
+            "Industry": "Technology",
+            "Revenue": 7980815,
+            "Employees": 135,
+            "Location": "New York"
+        },
+        {
+            "Company_ID": 46,
+            "Company_Name": "Company 46",
+            "Industry": "Healthcare",
+            "Revenue": 9721604,
+            "Employees": 93,
+            "Location": "Houston"
+        },
+        {
+            "Company_ID": 47,
+            "Company_Name": "Company 47",
+            "Industry": "Finance",
+            "Revenue": 5103892,
+            "Employees": 391,
+            "Location": "New York"
+        },
+        {
+            "Company_ID": 48,
+            "Company_Name": "Company 48",
+            "Industry": "Healthcare",
+            "Revenue": 4510252,
+            "Employees": 399,
+            "Location": "Houston"
+        },
+        {
+            "Company_ID": 49,
+            "Company_Name": "Company 49",
+            "Industry": "Healthcare",
+            "Revenue": 229106,
+            "Employees": 27,
+            "Location": "Chicago"
+        },
+        {
+            "Company_ID": 50,
+            "Company_Name": "Company 50",
+            "Industry": "Retail",
+            "Revenue": 1797494,
+            "Employees": 353,
+            "Location": "Los Angeles"
+        }
+    ]
+}
