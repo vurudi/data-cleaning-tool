@@ -24,9 +24,17 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit(
         '.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+import pandas as pd
+import numpy as np
+import json
+
+import pandas as pd
+import numpy as np
+import json
 
 def get_dataset_overview(file_path):
     try:
+        # Read the dataset
         if file_path.endswith('.json'):
             # Read the JSON file into a DataFrame
             with open(file_path, 'r') as file:
@@ -36,12 +44,7 @@ def get_dataset_overview(file_path):
             df = pd.DataFrame(data[records_key])
         else:
             # For other file formats, read using pandas
-            if file_path.endswith('.csv'):
-                df = pd.read_csv(file_path)
-            elif file_path.endswith('.xlsx') or file_path.endswith('.xls'):
-                df = pd.read_excel(file_path)
-            else:
-                raise ValueError("Unsupported file format")
+            df = pd.read_csv(file_path) if file_path.endswith('.csv') else pd.read_excel(file_path)
 
         # Get dataset overview
         num_records = len(df)
@@ -55,25 +58,55 @@ def get_dataset_overview(file_path):
             'column_names': column_names,
             'data_types': data_types,
             'missing_values': [],
-            'num_duplicates': 0,
+            'num_duplicates': df.duplicated().sum(),
             'incompatible_data': []
         }
 
-        # Calculate missing values for each column
-        for column in df.columns:
-            num_missing = df[column].isnull().sum()
-            missing_percentage = num_missing / len(df) * 100
-            overview['missing_values'].append({
-                'column_name':
-                column,
-                'num_missing':
-                num_missing,
-                'missing_percentage':
-                f'{missing_percentage:.2f}%'
-            })
+        # Check for missing values
+        missing_data = df.isnull().sum()
+        for column, num_missing in missing_data.items():
+            if num_missing > 0:
+                missing_percentage = (num_missing / num_records) * 100
+                overview['missing_values'].append({
+                    'column_name': column,
+                    'num_missing': num_missing,
+                    'missing_percentage': f'{missing_percentage:.2f}%'
+                })
 
-        # Calculate number of duplicates
-        overview['num_duplicates'] = df.duplicated().sum()
+        # Check for incompatible data
+        for column in df.columns:
+            if data_types[column] == object:  # Check only object type columns
+                try:
+                    # Convert to float and count integer values
+                    integer_count = sum(df[column].astype(str).str.replace('.', '', 1).str.isdigit())
+                    integer_percentage = (integer_count / num_records) * 100
+                    character_percentage = 100 - integer_percentage
+
+                    # Check if pure integer percentage is greater than 60%
+                    if integer_percentage > 60:
+                        overview['incompatible_data'].append({
+                            'column_name': column,
+                            'incompatible_values': df[column].unique().tolist(),
+                            'integer_percentage': f'{integer_percentage:.2f}%'
+                        })
+                    # Otherwise, check if character percentage is higher
+                    elif character_percentage > 60:
+                        # This column is considered okay, we ignore it
+                        pass
+                    else:
+                        overview['incompatible_data'].append({
+                            'column_name': column,
+                            'incompatible_values': df[column].unique().tolist(),
+                            'integer_percentage': f'{integer_percentage:.2f}%',
+                            'character_percentage': f'{character_percentage:.2f}%'
+                        })
+
+                except ValueError:
+                    # If ValueError occurs during conversion, consider it incompatible
+                    overview['incompatible_data'].append({
+                        'column_name': column,
+                        'incompatible_values': df[column].unique().tolist()
+                    })
 
         return overview
     except Exception as e:
@@ -234,17 +267,27 @@ def cleaning(file_name):
                            file_name=file_name,
                            overview=overview)
 
+from flask import request, redirect, url_for, flash
+import os
+import pandas as pd
+import numpy as np
+from scipy import stats
+import json
+
+import pandas as pd
+import numpy as np
+import json
+import os
+from flask import request, redirect, url_for, flash
 
 @app.route('/save_cleaned_data', methods=['POST'])
 def save_cleaned_data():
     if request.method == 'POST':
-        file_name = request.form[
-            'file_name']  # Get the file name from the form
+        file_name = request.form['file_name']  # Get the file name from the form
         raw_file_path = os.path.join(app.config['UPLOAD_FOLDER'], file_name)
 
         # Get the selected cleaning strategies from the form
         missing_values_strategy = request.form.get('missing_values_strategy')
-        duplicate_columns = request.form.getlist('duplicate_columns')
         outlier_strategy = request.form.get('outlier_strategy')
 
         try:
@@ -260,16 +303,18 @@ def save_cleaned_data():
                 # For other file formats, read using pandas
                 if raw_file_path.endswith('.csv'):
                     df = pd.read_csv(raw_file_path)
-                elif raw_file_path.endswith('.xlsx') or raw_file_path.endswith(
-                        '.xls'):
+                elif raw_file_path.endswith('.xlsx') or raw_file_path.endswith('.xls'):
                     df = pd.read_excel(raw_file_path)
                 else:
                     raise ValueError("Unsupported file format")
 
             # Drop specific columns
+            # Drop specific columns in a case-insensitive manner
             columns_to_drop = ['name', 'email', 'contact']
-            df.drop(columns_to_drop, axis=1, inplace=True,
-                    errors='ignore')  # Ignore error if column doesn't exist
+            columns_to_drop_lower = [col.lower() for col in columns_to_drop]
+            df.columns = df.columns.str.lower()
+
+            df.drop(columns_to_drop_lower, axis=1, inplace=True, errors='ignore')
 
             # Handling missing values
             if missing_values_strategy == 'imputation':
@@ -288,10 +333,22 @@ def save_cleaned_data():
                 df.dropna(axis=1, inplace=True)
 
             # Removing duplicates
-            if duplicate_columns:
-                df.drop_duplicates(subset=duplicate_columns, inplace=True)
+            df.drop_duplicates(inplace=True)
 
-            # Dealing with outliers
+            # Dealing with incompatible data
+            for column in df.select_dtypes(include='object').columns:
+                try:
+                    # Attempt to convert to float and count integer values
+                    integer_count = sum(df[column].str.replace('.', '', 1).str.isdigit())
+                    integer_percentage = (integer_count / len(df[column])) * 100
+                    # If pure integer percentage is above 60%, drop non-integer rows
+                    if integer_percentage > 60:
+                        df = df[df[column].str.replace('.', '', 1).str.isdigit()]
+                except ValueError:
+                    # If ValueError occurs during conversion, consider it incompatible
+                    df.drop(column, axis=1, inplace=True)
+
+            # Dealing with outliers (code remains unchanged)
             if outlier_strategy == 'remove_outliers':
                 # Remove outliers using z-score method
                 z_scores = stats.zscore(df.select_dtypes(include='number'))
@@ -300,10 +357,7 @@ def save_cleaned_data():
                 df = df[filtered_entries]
             elif outlier_strategy == 'transform_outliers':
                 # Transform outliers using log transformation
-                df[df.select_dtypes(
-                    include='number').columns] = df.select_dtypes(
-                        include='number').apply(lambda x: np.log(
-                            x + 1) if np.issubdtype(x.dtype, np.number) else x)
+                df[df.select_dtypes(include='number').columns] = df.select_dtypes(include='number').apply(lambda x: np.log(x + 1) if np.issubdtype(x.dtype, np.number) else x)
             elif outlier_strategy == 'treat_separately':
                 # Treat outliers separately (e.g., replace with median)
                 for column in df.select_dtypes(include='number').columns:
@@ -312,14 +366,10 @@ def save_cleaned_data():
                     iqr = q3 - q1
                     lower_bound = q1 - 1.5 * iqr
                     upper_bound = q3 + 1.5 * iqr
-                    df[column] = np.where((df[column] < lower_bound) |
-                                          (df[column] > upper_bound),
-                                          df[column].median(), df[column])
+                    df[column] = np.where((df[column] < lower_bound) | (df[column] > upper_bound), df[column].median(), df[column])
 
             # Save the cleaned data to a new file
-            cleaned_file_path = os.path.join(
-                'cleaned_data', 'cleaned_' +
-                os.path.splitext(os.path.basename(raw_file_path))[0] + '.csv')
+            cleaned_file_path = os.path.join('cleaned_data', 'cleaned_' + os.path.splitext(os.path.basename(raw_file_path))[0] + '.csv')
             df.to_csv(cleaned_file_path, index=False)
             flash('Cleaned data saved successfully!', 'success')
 
@@ -327,7 +377,6 @@ def save_cleaned_data():
             flash('Error saving cleaned data: ' + str(e), 'error')
 
     return redirect(url_for('index'))
-
 
 @app.route('/download_cleaned_data/<file_name>', methods=['GET'])
 def download_cleaned_data(file_name):
